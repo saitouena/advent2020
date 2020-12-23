@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: djblue/portal:0.5.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/djblue/portal/0.5.0/portal-0.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
