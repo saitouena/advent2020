@@ -53,4 +53,26 @@
      parse
      info->graph
      (get "shiny gold"))
- (solve1 (slurp "resources/input7")))
+ (solve1 (slurp "resources/input7"))
+ (-> (slurp "resources/input7")
+     parse))
+
+(defn- count-bags
+  [parsed bag]
+  (apply + 1
+         (for [[k n] (get parsed bag)]
+           (* n (count-bags parsed k)))))
+
+(defn solve2
+  [text]
+  (let [parsed (parse text)]
+    (dec (count-bags parsed "shiny gold"))))
+
+(def an-example "light red bags contain 1 bright white bag, 2 muted yellow bags.\ndark orange bags contain 3 bright white bags, 4 muted yellow bags.\nbright white bags contain 1 shiny gold bag.\nmuted yellow bags contain 2 shiny gold bags, 9 faded blue bags.\nshiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.\ndark olive bags contain 3 faded blue bags, 4 dotted black bags.\nvibrant plum bags contain 5 faded blue bags, 6 dotted black bags.\nfaded blue bags contain no other bags.\ndotted black bags contain no other bags.")
+
+(def another-example "shiny gold bags contain 2 dark red bags.\ndark red bags contain 2 dark orange bags.\ndark orange bags contain 2 dark yellow bags.\ndark yellow bags contain 2 dark green bags.\ndark green bags contain 2 dark blue bags.\ndark blue bags contain 2 dark violet bags.\ndark violet bags contain no other bags.")
+
+(comment
+ (solve2 an-example)
+ (solve2 another-example)
+ (solve2 (slurp "resources/input7")))
