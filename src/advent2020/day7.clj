@@ -8,7 +8,7 @@
     [s (into {} (for [o (str/split os #"\.|,")
                       :let [[_ n color] (re-matches #" *(\d+) ([a-z]+ [a-z]+) bags*" o)]]
                   [color (Long/parseLong n)]))]
-    (let [[_ s] (re-matches #"([a-z]+ [a-z]+ bags) contain no other bags."
+    (let [[_ s] (re-matches #"([a-z]+ [a-z]+) bags contain no other bags."
                             line)]
       [s nil])))
 
