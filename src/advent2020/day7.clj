@@ -1,5 +1,6 @@
 (ns advent2020.day7
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.set :as set]))
 
 (defn- parse-line
   [line]
@@ -23,6 +24,33 @@
  (parse-line "pale beige bags contain 4 wavy gray bags, 4 faded lime bags, 4 bright beige bags, 1 plaid violet bag.")
  (parse-line "dim teal bags contain no other bags."))
 
-(let [lines (str/split-lines (slurp "resources/input7"))]
-  (for [l lines]
-    (parse-line l)))
+(defn- parsed->graph
+  [parsed]
+  (into {} (for [[k vs] (group-by first (apply concat (for [[k v] parsed]
+                                                        (for [to (keys v)]
+                                                          [to k]))))]
+             [k (set (map second vs))])))
+
+(defn- parse
+  [text]
+  (into {} (let [lines (str/split-lines text)]
+             (for [l lines]
+               (parse-line l)))))
+
+(defn traverse
+  [graph node]
+  (when-let [nexts (get graph node)]
+    (apply set/union nexts (map (partial traverse graph) nexts))))
+
+(defn solve1
+  [text]
+  (let [parsed (parse text)
+        graph (parsed->graph parsed)]
+    (count (traverse graph "shiny gold"))))
+
+(comment
+ (-> (slurp "resources/input7")
+     parse
+     info->graph
+     (get "shiny gold"))
+ (solve1 (slurp "resources/input7")))
