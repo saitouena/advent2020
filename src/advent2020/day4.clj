@@ -41,7 +41,7 @@
     (when-let [[_ n unit] (re-matches #"^(\d+)(cm|in)$" hgt)]
       (let [n (Long/parseLong n)]
         (case unit
-          "cm" (<= 150 n 192)
+          "cm" (<= 150 n 193)
           "in" (<= 59 n 76)
           false)))))
 
